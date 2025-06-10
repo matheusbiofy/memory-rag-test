@@ -1,5 +1,6 @@
 import json
 import os
+import logging
 from typing import List, Dict
 
 import numpy as np
@@ -16,14 +17,22 @@ RESP_CACHE_PATH = os.getenv("RESP_CACHE", "completion_cache.json")
 
 # Load caches
 if os.path.exists(EMBED_CACHE_PATH):
-    with open(EMBED_CACHE_PATH, "r", encoding="utf-8") as f:
-        _EMBED_CACHE: Dict[str, List[float]] = json.load(f)
+    try:
+        with open(EMBED_CACHE_PATH, "r", encoding="utf-8") as f:
+            _EMBED_CACHE: Dict[str, List[float]] = json.load(f)
+    except json.JSONDecodeError:
+        logging.warning("Failed to decode %s, starting with empty embed cache", EMBED_CACHE_PATH)
+        _EMBED_CACHE = {}
 else:
     _EMBED_CACHE = {}
 
 if os.path.exists(RESP_CACHE_PATH):
-    with open(RESP_CACHE_PATH, "r", encoding="utf-8") as f:
-        _RESP_CACHE: Dict[str, str] = json.load(f)
+    try:
+        with open(RESP_CACHE_PATH, "r", encoding="utf-8") as f:
+            _RESP_CACHE: Dict[str, str] = json.load(f)
+    except json.JSONDecodeError:
+        logging.warning("Failed to decode %s, starting with empty completion cache", RESP_CACHE_PATH)
+        _RESP_CACHE = {}
 else:
     _RESP_CACHE = {}
 
