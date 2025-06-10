@@ -59,10 +59,10 @@ def main():
     # 5. Build FAISS index
     dim   = embeddings.shape[1]
     index = faiss.IndexFlatIP(dim)
-    index.add(embeddings)
+    index.add(x=embeddings)#type: ignore
     print(f"✅ Indexed {index.ntotal} chunks")
 
-    # 6. Persist FAISS index and metadata map
+    # 6. Persist FAISS index and metadata map, here is what happens the indexing of memory index
     faiss.write_index(index, "faiss.index")
     with open("metadatas.json", "w", encoding="utf-8") as f:
         json.dump(

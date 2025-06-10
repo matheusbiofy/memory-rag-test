@@ -20,7 +20,7 @@ id_list   = [ d["id"]       for d in docs ]
 def retrieve(query: str, k: int = 5):
     q_emb = get_embedding(query)[None, :]
     faiss.normalize_L2(q_emb)
-    D, I = index.search(q_emb, k)
+    D, I = index.search(q_emb, k) # retorna os IDs dos trechos mais similares
     # return list of (chunk_id, score)
     return [ (id_list[i], float(D[0][j])) for j, i in enumerate(I[0]) ]
 
