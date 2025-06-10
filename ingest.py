@@ -15,13 +15,13 @@ import numpy as np
 import faiss
 
 from dotenv import load_dotenv
-from openai import OpenAI
 from langchain.text_splitter import RecursiveCharacterTextSplitter
+
+from utils import get_embedding
 
 def main():
     # Load your OpenAI API key from .env
     load_dotenv()
-    client = OpenAI()
 
     # 1. Set up text splitter
     splitter = RecursiveCharacterTextSplitter(
@@ -50,18 +50,8 @@ def main():
         json.dump(docs, f, ensure_ascii=False, indent=2)
     print(f"✅ Wrote chunks.json with {len(docs)} entries")
 
-    # 4. Embed in batches
-    texts = [d["text"] for d in docs]
-    BATCH = 50
-    embeddings = []
-    for i in range(0, len(texts), BATCH):
-        batch = texts[i : i + BATCH]
-        resp  = client.embeddings.create(
-            model="text-embedding-ada-002",
-            input=batch
-        )
-        # resp.data is a list of objects with .embedding
-        embeddings.extend([item.embedding for item in resp.data])
+    # 4. Embed texts with caching to save OpenAI costs
+    embeddings = [get_embedding(d["text"]).tolist() for d in docs]
 
     embeddings = np.array(embeddings, dtype="float32")
     faiss.normalize_L2(embeddings)
