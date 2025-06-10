@@ -43,7 +43,7 @@ class EphemeralMemory:
             f"{convo}\nResumo:"
         )
         chat = self.client.chat.completions.create(
-            model="gpt-3.5-turbo",
+            model="gpt-4o",
             messages=[{"role": "user", "content": prompt}],
             temperature=0,
         )
@@ -55,7 +55,7 @@ class EphemeralMemory:
             return []
         texts = [m["content"] for m in self.history]
         resp = self.client.embeddings.create(
-            model="text-embedding-ada-002", input=[query] + texts
+            model="text-embedding-3-large", input=[query] + texts
         )
         q_emb = np.array(resp.data[0].embedding, dtype="float32")
         mem_embs = np.array([d.embedding for d in resp.data[1:]], dtype="float32")

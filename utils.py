@@ -66,7 +66,7 @@ def cached_completion(prompt: str) -> str:
     if prompt in _RESP_CACHE:
         return _RESP_CACHE[prompt]
     chat = client.chat.completions.create(
-        model="gpt-3.5-turbo",
+        model="gpt-4o",
         messages=[{"role": "user", "content": prompt}],
         temperature=0,
     )
