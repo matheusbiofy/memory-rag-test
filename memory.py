@@ -47,7 +47,7 @@ class EphemeralMemory:
             messages=[{"role": "user", "content": prompt}],
             temperature=0,
         )
-        summary = chat.choices[0].message.content.strip()
+        summary = chat.choices[0].message.content.strip() #type: ignore
         self.history = [{"role": "system", "content": summary}] + self.history[4:]
 
     def retrieve(self, query: str, top_k: int = 2) -> List[str]:

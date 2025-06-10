@@ -1,0 +1,26 @@
+[
+  {
+    "role": "user",
+    "content": "qual o nome do juiz nesse processo?"
+  },
+  {
+    "role": "assistant",
+    "content": "O nome do juiz nesse processo é RUY DIAS DE SOUZA FILHO."
+  },
+  {
+    "role": "user",
+    "content": "quais as partes envolvidas nesse processo?"
+  },
+  {
+    "role": "assistant",
+    "content": "As partes envolvidas nesse processo são os advogados MÁRCIO PINTO MARTINS TUMA e BÁRBARA SANTOS DE ALMEIDA, a União e a embargante."
+  },
+  {
+    "role": "user",
+    "content": "qual foi minha ultima mensagem?"
+  },
+  {
+    "role": "assistant",
+    "content": "Sua última mensagem foi: \"V.Exa., vem informar que, em 13/12/2012, foi devidamente efetuada a Averbação sob o imóvel, registrado na Matrícula 10466, Folha 10466 do Livro 2 — J. Q, deixando livre de quaisquer desembaraços de ônus, tudo de conformidade com a certidão em anexo, para ulteriores fins de direito.\""
+  }
+]
