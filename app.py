@@ -7,11 +7,16 @@ import json
 import numpy as np
 import gradio as gr
 from dotenv import load_dotenv
+
 from openai import OpenAI
+from memory import EphemeralMemory
+from utils import get_embedding, cached_completion
 
 # Carrega configuração e modelos
 load_dotenv()  # garante OPENAI_API_KEY
 client = OpenAI()
+session_id = os.environ.get("SESSION_ID")
+memory = EphemeralMemory(session_id=session_id)
 
 # 1) Carrega índice FAISS e chunks
 index = faiss.read_index("faiss.index")
@@ -21,33 +26,32 @@ chunk_map = { d["id"]: d["text"] for d in docs }
 id_list   = [ d["id"]       for d in docs ]
 
 # 2) Função de recuperação
-def retrieve(query: str, k: int = 5):
-    resp  = client.embeddings.create(model="text-embedding-ada-002", input=[query])
-    q_emb = np.array(resp.data[0].embedding, dtype="float32")[None, :]
+def retrieve_docs(query: str, k: int = 5):
+    q_emb = get_embedding(query)[None, :]
     faiss.normalize_L2(q_emb)
     D, I = index.search(q_emb, k)
     return [ (id_list[i], float(D[0][j])) for j, i in enumerate(I[0]) ]
 
 # 3) Função de resposta
 def answer(query: str):
-    hits = retrieve(query)
+    doc_hits = retrieve_docs(query)
+    mem_hits = memory.retrieve(query)
     prompt_chunks = []
-    for cid, score in hits:
+    for cid, score in doc_hits:
         text = chunk_map[cid]
         prompt_chunks.append(f"=== (score: {score:.3f}) [{cid}]\n{text}\n")
 
-    context = "\n".join(prompt_chunks)
+    doc_context = "\n".join(prompt_chunks)
+    mem_context = "\n".join(mem_hits)
     prompt  = (
-        "Você é um assistente jurídico. Com base nos trechos abaixo, responda em português:\n\n"
-        f"{context}\nPergunta: {query}\nResposta:"
+        "Você é um assistente jurídico. Considere o histórico e os trechos a seguir ao responder em português:\n\n"
+        f"Histórico:\n{mem_context}\n\n{doc_context}\nPergunta: {query}\nResposta:"
     )
 
-    chat = client.chat.completions.create(
-        model="gpt-3.5-turbo",
-        messages=[{"role":"user", "content":prompt}],
-        temperature=0
-    )
-    return chat.choices[0].message.content
+    answer_text = cached_completion(prompt)
+    memory.add("user", query)
+    memory.add("assistant", answer_text)
+    return answer_text
 
 # 4) Interface Gradio
 iface = gr.Interface(

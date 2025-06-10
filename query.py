@@ -1,9 +1,11 @@
-import json, numpy as np, faiss
+import json
+import numpy as np
+import faiss
 from dotenv import load_dotenv
-from openai import OpenAI
+
+from utils import get_embedding, cached_completion
 
 load_dotenv()
-client = OpenAI()
 
 # 1. Load FAISS index + metadata map
 index = faiss.read_index("faiss.index")
@@ -16,8 +18,7 @@ id_list   = [ d["id"]       for d in docs ]
 
 # 3. Retrieval
 def retrieve(query: str, k: int = 5):
-    resp  = client.embeddings.create(model="text-embedding-ada-002", input=[query])
-    q_emb = np.array(resp.data[0].embedding, dtype="float32")[None, :]
+    q_emb = get_embedding(query)[None, :]
     faiss.normalize_L2(q_emb)
     D, I = index.search(q_emb, k)
     # return list of (chunk_id, score)
@@ -37,12 +38,7 @@ def answer(query: str):
         f"{context}\nPergunta: {query}\nResposta:"
     )
 
-    chat = client.chat.completions.create(
-        model="gpt-3.5-turbo",
-        messages=[{"role":"user", "content":prompt}],
-        temperature=0
-    )
-    return chat.choices[0].message.content
+    return cached_completion(prompt)
 
 if __name__ == "__main__":
     q = input("Pergunta: ")
