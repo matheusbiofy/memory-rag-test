@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # ingest.py
 # ------------
-# 1. Load all .txt files from ./docs
+# 1. Load all text files from ./docs
 # 2. Chunk them with overlap
 # 3. Persist chunks.json (id, text, metadata)
 # 4. Embed in batches via OpenAI
@@ -32,11 +32,12 @@ def main():
 
     # 2. Read & chunk all docs
     docs = []
-    for fname in os.listdir("docs"):
-        if not fname.endswith(".txt"):
+    for fname in sorted(os.listdir("docs")):
+        if not (fname.endswith(".txt") or fname.endswith(".md")):
             continue
         path = os.path.join("docs", fname)
-        text = open(path, encoding="utf-8").read()
+        with open(path, encoding="utf-8") as f:
+            text = f.read()
         chunks = splitter.split_text(text)
         for i, chunk in enumerate(chunks):
             docs.append({
@@ -49,6 +50,10 @@ def main():
     with open("chunks.json", "w", encoding="utf-8") as f:
         json.dump(docs, f, ensure_ascii=False, indent=2)
     print(f"✅ Wrote chunks.json with {len(docs)} entries")
+
+    if not docs:
+        print("⚠️ Nenhum documento encontrado em 'docs/'.")
+        return
 
     # 4. Embed texts with caching to save OpenAI costs
     embeddings = [get_embedding(d["text"]).tolist() for d in docs]
