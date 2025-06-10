@@ -22,7 +22,7 @@ Crie um arquivo `.env` com sua `OPENAI_API_KEY`.
 
 ## Preparando os documentos
 
-Coloque seus arquivos `.txt` em `docs/` e execute:
+Coloque seus arquivos `.txt` ou `.md` em `docs/` e execute:
 
 ```bash
 python ingest.py
