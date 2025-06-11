@@ -17,7 +17,7 @@ import faiss
 from dotenv import load_dotenv
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 
-from utils import get_embedding
+from utils import get_embedding, flush_cache
 
 def main():
     # Load your OpenAI API key from .env
@@ -75,6 +75,9 @@ def main():
             f, ensure_ascii=False, indent=2
         )
     print("✅ Wrote metadatas.json")
+
+    # Persist caches only once after all embeddings are processed
+    flush_cache()
 
 if __name__ == "__main__":
     main()
