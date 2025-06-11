@@ -33,7 +33,7 @@ def retrieve_docs(query: str, k: int = 5):
     return [ (id_list[i], float(D[0][j])) for j, i in enumerate(I[0]) ]
 
 # 3) Função de resposta
-def answer(query: str):
+def answer(query: str) -> str:
     doc_hits = retrieve_docs(query)
     mem_hits = memory.retrieve(query)
     prompt_chunks = []
@@ -53,14 +53,19 @@ def answer(query: str):
     memory.add("assistant", answer_text)
     return answer_text
 
-# 4) Interface Gradio
-iface = gr.Interface(
-    fn=answer,
-    inputs=gr.Textbox(lines=2, placeholder="Digite sua pergunta aqui...", label="Pergunta"),
-    outputs=gr.Textbox(lines=10, label="Resposta"),
+
+# 4) Interface de chat com histórico
+def chat(query: str, history: list[tuple[str, str]]) -> str:
+    """Wrapper para usar com gr.ChatInterface."""
+    return answer(query)
+
+iface = gr.ChatInterface(
+    fn=chat,
     title="MemoryRAG Test",
     description="Faça perguntas sobre seus documentos jurídicos em Português-BR.",
-    allow_flagging="never"
+    retry_btn="Repetir",
+    undo_btn="Desfazer",
+    clear_btn="Limpar",
 )
 
 if __name__ == "__main__":
