@@ -49,6 +49,11 @@ def save_caches() -> None:
         json.dump(_RESP_CACHE, f)
 
 
+def flush_cache() -> None:
+    """Persist caches to disk."""
+    save_caches()
+
+
 def get_embedding(text: str) -> np.ndarray:
     if text in _EMBED_CACHE:
         return np.array(_EMBED_CACHE[text], dtype="float32")
@@ -58,7 +63,6 @@ def get_embedding(text: str) -> np.ndarray:
         resp = client.embeddings.create(model="text-embedding-ada-002", input=[text])
         emb = resp.data[0].embedding
     _EMBED_CACHE[text] = emb
-    save_caches()
     return np.array(emb, dtype="float32")
 
 

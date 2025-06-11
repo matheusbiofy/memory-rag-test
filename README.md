@@ -29,6 +29,7 @@ python ingest.py
 ```
 
 Os chunks serão armazenados em `chunks.json` e o índice em `faiss.index`.
+Os caches de embeddings agora são salvos apenas ao final da ingestão para reduzir escritas em disco.
 
 ## Executando
 
@@ -41,6 +42,7 @@ Use `SESSION_ID=myid python app.py` para continuar uma sessão existente. O hist
 ## Controles de custo
 
 O projeto possui cache de embeddings e respostas em `embed_cache.json` e `completion_cache.json`. Defina `LOCAL_EMBED_MODEL` para usar um modelo do `sentence-transformers` e evitar chamadas à API para embeddings.
+Durante a ingestão, os embeddings são persistidos em lote somente ao final do processo.
 
 Se esses arquivos ficarem corrompidos (por exemplo, erros de JSON), apague-os para que sejam recriados automaticamente.
 
