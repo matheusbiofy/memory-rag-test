@@ -39,6 +39,8 @@ python app.py
 
 Use `SESSION_ID=myid python app.py` para continuar uma sessão existente. O histórico é gravado em `sessions/<id>.json`.
 
+Ao executar, será aberta uma interface de **chat** no navegador. Todas as mensagens trocadas ficam visíveis e são usadas para compor novas respostas.
+
 ## Controles de custo
 
 O projeto possui cache de embeddings e respostas em `embed_cache.json` e `completion_cache.json`. Defina `LOCAL_EMBED_MODEL` para usar um modelo do `sentence-transformers` e evitar chamadas à API para embeddings.
