@@ -34,10 +34,10 @@ Os caches de embeddings agora são salvos apenas ao final da ingestão para redu
 ## Executando
 
 ```bash
-python app.py
+python query.py
 ```
 
-Use `SESSION_ID=myid python app.py` para continuar uma sessão existente. O histórico é gravado em `sessions/<id>.json`.
+Use `SESSION_ID=myid python query.py` para continuar uma sessão existente. O histórico é gravado em `sessions/<id>.json`.
 
 Ao executar, será aberta uma interface de **chat** no navegador. Todas as mensagens trocadas ficam visíveis e são usadas para compor novas respostas.
 
