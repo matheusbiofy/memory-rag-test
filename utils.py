@@ -2,6 +2,7 @@ import json
 import os
 import logging
 from typing import List, Dict
+import re
 
 import numpy as np
 from openai import OpenAI
@@ -76,8 +77,8 @@ def cached_completion(prompt: str) -> str:
         "úteis com base nas informações disponíveis. Use o contexto fornecido para "
         "responder às perguntas do usuário. Se não souber a resposta, diga que não "
         "sabe e sugira consultar os documentos relevantes que você possui. Sempre "
-        "responda em Português-BR, mantendo um tom profissional e claro. 
-        Cada resposta que você fornecer, deve também mostrar em qual documento essa informação está presente\n\n"
+        "responda em Português-BR, mantendo um tom profissional e claro. "
+        "Cada resposta que você fornecer deve citar de forma amigável o nome do documento onde a informação aparece (ex.: '05/04/2022 - Deferido o pedido').\n\n"
 
         "### Exemplos de interação\n"
         "Usuário: Quais são as partes envolvidas na execução de título "
@@ -111,3 +112,17 @@ def cached_completion(prompt: str) -> str:
         _RESP_CACHE[prompt] = answer
         save_caches()
     return answer or ""
+
+
+def humanize_doc_id(doc_id: str) -> str:
+    """Return a human friendly name for a given chunk/document id."""
+    base = doc_id.split("__")[0]
+    base = os.path.basename(base)
+    name = os.path.splitext(base)[0]
+    m = re.match(r"(\d{2})(\d{2})(\d{4})-\d{6}-(.+)", name)
+    if m:
+        day, month, year, slug = m.groups()
+        slug = slug.replace("-", " ").replace("_", " ")
+        slug = slug.capitalize()
+        return f"{day}/{month}/{year} - {slug}"
+    return name

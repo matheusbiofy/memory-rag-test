@@ -10,7 +10,7 @@ from dotenv import load_dotenv
 
 from openai import OpenAI
 from memory import EphemeralMemory
-from utils import get_embedding, cached_completion
+from utils import get_embedding, cached_completion, humanize_doc_id
 
 # Carrega configuração e modelos
 load_dotenv()  # garante OPENAI_API_KEY
@@ -39,7 +39,8 @@ def answer(query: str) -> str:
     prompt_chunks = []
     for cid, score in doc_hits:
         text = chunk_map[cid]
-        prompt_chunks.append(f"=== (score: {score:.3f}) [{cid}]\n{text}\n")
+        display_name = humanize_doc_id(cid)
+        prompt_chunks.append(f"=== (score: {score:.3f}) [{display_name}]\n{text}\n")
 
     doc_context = "\n".join(prompt_chunks)
     mem_context = "\n".join(mem_hits)
