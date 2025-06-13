@@ -69,12 +69,16 @@ def get_embedding(text: str) -> np.ndarray:
 def cached_completion(prompt: str) -> str:
     if prompt in _RESP_CACHE:
         return _RESP_CACHE[prompt]
+    system_message = "Você é um assistente jurídico chamado LexIA. Considere os trechos a seguir ao responder em português:"
     chat = client.chat.completions.create(
-        model="gpt-4o",
-        messages=[{"role": "user", "content": prompt}],
-        temperature=0,
+        model="o4-mini",
+        messages=[
+            {"role": "system", "content": system_message},
+            {"role": "user", "content": prompt}
+        ],
     )
     answer = chat.choices[0].message.content
-    _RESP_CACHE[prompt] = answer
-    save_caches()
-    return answer
+    if answer is not None:
+        _RESP_CACHE[prompt] = answer
+        save_caches()
+    return answer or ""

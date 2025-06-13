@@ -32,10 +32,10 @@ def main():
 
     # 2. Read & chunk all docs
     docs = []
-    for fname in sorted(os.listdir("docs")):
+    for fname in sorted(os.listdir("docs_2")):  # Changed from "docs" to "docs_2"
         if not (fname.endswith(".txt") or fname.endswith(".md")):
             continue
-        path = os.path.join("docs", fname)
+        path = os.path.join("docs_2", fname)  # This line is already correct
         with open(path, encoding="utf-8") as f:
             text = f.read()
         chunks = splitter.split_text(text)
@@ -52,7 +52,7 @@ def main():
     print(f"✅ Wrote chunks.json with {len(docs)} entries")
 
     if not docs:
-        print("⚠️ Nenhum documento encontrado em 'docs/'.")
+        print("⚠️ Nenhum documento encontrado em 'docs_2/'.")  # Updated folder name
         return
 
     # 4. Embed texts with caching to save OpenAI costs

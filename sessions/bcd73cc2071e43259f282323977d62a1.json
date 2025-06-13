@@ -1,0 +1,26 @@
+[
+  {
+    "role": "user",
+    "content": "Quais são os bens Penhorados no processo?"
+  },
+  {
+    "role": "assistant",
+    "content": "Os trechos fornecidos não especificam quais bens foram penhorados no processo."
+  },
+  {
+    "role": "user",
+    "content": "Quais são os bens Penhorados no processo?"
+  },
+  {
+    "role": "assistant",
+    "content": "Os trechos fornecidos não especificam quais bens foram penhorados no processo."
+  },
+  {
+    "role": "user",
+    "content": "Quais são os bens Penhorados no processo?"
+  },
+  {
+    "role": "assistant",
+    "content": "Os trechos fornecidos não especificam quais bens foram penhorados no processo."
+  }
+]
