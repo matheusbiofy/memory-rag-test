@@ -7,6 +7,8 @@ import faiss
 import numpy as np
 from openai import OpenAI
 
+from utils import get_embedding
+
 
 class EphemeralMemory:
     """Simple ephemeral memory with summarization and persistence."""
@@ -24,12 +26,22 @@ class EphemeralMemory:
             self.history = []
             self._persist()
 
+        # Pre-compute embeddings for loaded history
+        self.embeddings: list[np.ndarray] = []
+        for msg in self.history:
+            emb = get_embedding(msg["content"])
+            faiss.normalize_L2(emb[None, :])
+            self.embeddings.append(emb)
+
     def _persist(self) -> None:
         with open(self.session_path, "w", encoding="utf-8") as f:
             json.dump(self.history, f, ensure_ascii=False, indent=2)
 
     def add(self, role: str, content: str) -> None:
         self.history.append({"role": role, "content": content})
+        emb = get_embedding(content)
+        faiss.normalize_L2(emb[None, :])
+        self.embeddings.append(emb)
         if len(self.history) > self.max_history:
             self._summarize()
         self._persist()
@@ -47,20 +59,18 @@ class EphemeralMemory:
             messages=[{"role": "user", "content": prompt}],
             temperature=0,
         )
-        summary = chat.choices[0].message.content.strip() #type: ignore
+        summary = chat.choices[0].message.content.strip()  # type: ignore
         self.history = [{"role": "system", "content": summary}] + self.history[4:]
+        emb = get_embedding(summary)
+        faiss.normalize_L2(emb[None, :])
+        self.embeddings = [emb] + self.embeddings[4:]
 
     def retrieve(self, query: str, top_k: int = 2) -> List[str]:
         if not self.history:
             return []
-        texts = [m["content"] for m in self.history]
-        resp = self.client.embeddings.create(
-            model="text-embedding-3-large", input=[query] + texts
-        )
-        q_emb = np.array(resp.data[0].embedding, dtype="float32")
-        mem_embs = np.array([d.embedding for d in resp.data[1:]], dtype="float32")
+        q_emb = get_embedding(query)
         faiss.normalize_L2(q_emb[None, :])
-        faiss.normalize_L2(mem_embs)
+        mem_embs = np.vstack(self.embeddings)
         scores = mem_embs @ q_emb
         idx = np.argsort(scores)[::-1][:top_k]
-        return [texts[i] for i in idx]
+        return [self.history[i]["content"] for i in idx]
