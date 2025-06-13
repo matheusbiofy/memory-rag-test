@@ -1,0 +1,18 @@
+[
+  {
+    "role": "user",
+    "content": "Existe dinheiro depositado em juizo?\n"
+  },
+  {
+    "role": "assistant",
+    "content": "Sim. Há valores depositados em conta judicial nos autos:\n\n1. Conforme o Despacho de 27/02/2015 (documento 27022015-171118-despachodecisao-de-expediente.md__0), a Caixa Econômica Federal foi autorizada a levantar os valores depositados nas contas judiciais nº 3935.005.201696 e 3935.005.201700, referentes à arrematação, devendo comprovar o encerramento das contas e apresentar nova planilha de cálculo.  \n2. No Despacho de 13/10/2015 (documento 13102015-201739-despachodecisao-interlocutoria.md__18), a juíza determinou a abertura de conta judicial nº 3935.005.000201700 para receber o montante da arrematação dos imóveis de matrícula nº 59.664, 61.856, 61.858 e 61.862.  \n3. Por fim, o acórdão do TRF4 de 31/08/2012 (documento 11052022-165454-determinada-a-intimacao.md__2) informa que, nessa conta judicial tipo 005, permanecem apenas R$ 3.400,00 de comissão de leiloeiro (evento 466.2) e R$ 340,00 de taxa judicial (evento 469.1)."
+  },
+  {
+    "role": "user",
+    "content": "Houve decisão dos embargos a execução?"
+  },
+  {
+    "role": "assistant",
+    "content": "Não. Nos autos não houve decisão sobre embargos à execução propriamente ditos. O que consta são:\n\n1. Rejeição de embargos de declaração opostos pela parte executada – documento “21052021-174204-embargos-de-declaracao-nao-acolhidos.md__3”.  \n2. Decisão no âmbito de embargos de terceiro, que suspendeu a arrematação – documento “05042022-094622-deferido-o-pedido.md__3”."
+  }
+]
