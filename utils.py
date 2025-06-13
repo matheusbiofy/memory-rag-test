@@ -81,6 +81,7 @@ def cached_completion(prompt: str) -> str:
         "Cada resposta que você fornecer deve citar de forma amigável o nome do documento onde a informação aparece (ex.: '05/04/2022 - Deferido o pedido').\n\n"
 
         "### Exemplos de interação\n"
+         
         "Usuário: Quais são as partes envolvidas na execução de título "
         "extrajudicial e qual o valor da dívida?\n"
         "Assistente: As partes são a Empresa Gestora de Ativos (EMGEA) e Antonio "

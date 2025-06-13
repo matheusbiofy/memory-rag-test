@@ -1,0 +1,34 @@
+[
+  {
+    "role": "system",
+    "content": "O usuário perguntou sobre a situação atual do processo, e o assistente informou que está na fase de cumprimento de sentença/executório, com cálculos atualizados juntados em 09/03/2023 e advertência de arquivamento provisório se não cumpridos. O usuário questionou sobre sua última mensagem, que foi um despacho de 22/04/2015, assinado por Lília Côrtes de Carvalho de Martino, e perguntou o nome do juiz, sendo informado que é o Dr. Guilherme Roman Borges. O usuário também perguntou sobre o valor da dívida atualizada, que é de R$ 2.225.914,23 conforme apurado em julho de 2019."
+  },
+  {
+    "role": "assistant",
+    "content": "Até onde consta nos autos, o único valor expressamente indicado para a dívida é de R$ 2.225.914,23 (dois milhões, duzentos e vinte e cinco mil, novecentos e quatorze reais e vinte e três centavos), atualizado para julho/2019.  \n- 23/03/2020 – Remessa para disponibilização no diário eletrônico (evento 279)  \n- 23/03/2020 – Expedido edital de leilão-praça  \n\nNos demais atos (06/06/2016; 13/06/2019; 13/10/2015) houve solicitação de atualização ou informação quanto ao débito, mas não foi indicado outro montante distinto daquele acima."
+  },
+  {
+    "role": "user",
+    "content": "qual foi minha ultima pergunta?"
+  },
+  {
+    "role": "assistant",
+    "content": "Sua última pergunta foi: “qual foi minha última pergunta?” (mensagem do usuário)"
+  },
+  {
+    "role": "user",
+    "content": "nos documentos eu li que a dívida atualizada é de 94.915.840,44 (noventa e quatro milhões, novecentos e quinze mil oitocentos e quarenta reais e quarenta e quatro centavos) quando a dívida de execução foi indicada a esse valor."
+  },
+  {
+    "role": "assistant",
+    "content": "O montante de R$ 94.915.840,44 foi informado no ato de remessa para publicação do edital, datado de 30/03/2021, com previsão de disponibilização no Diário Eletrônico em 05/04/2021.  \nDocumento citado: “30/03/2021 – Remessa para disponibilização no diário eletrônico de edital no dia 05/04/2021”."
+  },
+  {
+    "role": "user",
+    "content": "qual o valor da dívida atualizada?"
+  },
+  {
+    "role": "assistant",
+    "content": "Conforme consta no Edital de Leilão de 23/03/2020, o valor da execução – já atualizado com os acréscimos legais – é de R$ 2.225.914,23 (dois milhões, duzentos e vinte e cinco mil, novecentos e quatorze reais e vinte e três centavos).  \n(23/03/2020 – Expedido edital leilão praça)"
+  }
+]
