@@ -8,13 +8,11 @@ import numpy as np
 import gradio as gr
 from dotenv import load_dotenv
 
-from openai import OpenAI
 from memory import EphemeralMemory
 from utils import get_embedding, cached_completion, humanize_doc_id
 
 # Carrega configuração e modelos
 load_dotenv()  # garante OPENAI_API_KEY
-client = OpenAI()
 session_id = os.environ.get("SESSION_ID")
 memory = EphemeralMemory(session_id=session_id)
 

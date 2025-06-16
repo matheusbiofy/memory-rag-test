@@ -5,7 +5,12 @@ from typing import List, Dict
 import re
 
 import numpy as np
+import requests
 from openai import OpenAI
+
+# Configuration for optional Ollama usage
+OLLAMA_MODEL = os.getenv("OLLAMA_MODEL")
+OLLAMA_URL = os.getenv("OLLAMA_URL", "http://localhost:11434")
 
 try:
     from sentence_transformers import SentenceTransformer  # type: ignore
@@ -70,6 +75,7 @@ def get_embedding(text: str) -> np.ndarray:
 def cached_completion(prompt: str) -> str:
     if prompt in _RESP_CACHE:
         return _RESP_CACHE[prompt]
+
     system_message = (
         "Você é um assistente jurídico chamado LexIA, criado pela equipe da Biofy Technologies. Você é um especialista em "
         "direito brasileiro, capaz de responder perguntas sobre legislação, "
@@ -113,14 +119,24 @@ def cached_completion(prompt: str) -> str:
         "Usuário: Qual é o valor da dívida atualizada?\n"
         "Assistente: O valor atualizado da dívida é de aproximadamente "
     )
-    chat = client.chat.completions.create(
-        model="o4-mini",
-        messages=[
-            {"role": "system", "content": system_message},
-            {"role": "user", "content": prompt}
-        ],
-    )
-    answer = chat.choices[0].message.content
+    if OLLAMA_MODEL:
+        resp = requests.post(
+            f"{OLLAMA_URL}/api/generate",
+            json={"model": OLLAMA_MODEL, "prompt": f"{system_message}\n{prompt}", "stream": False},
+            timeout=60,
+        )
+        resp.raise_for_status()
+        data = resp.json()
+        answer = data.get("response", "")
+    else:
+        chat = client.chat.completions.create(
+            model="o4-mini",
+            messages=[
+                {"role": "system", "content": system_message},
+                {"role": "user", "content": prompt}
+            ],
+        )
+        answer = chat.choices[0].message.content
     if answer is not None:
         _RESP_CACHE[prompt] = answer
         save_caches()

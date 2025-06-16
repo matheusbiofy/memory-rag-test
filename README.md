@@ -48,3 +48,14 @@ Durante a ingestão, os embeddings são persistidos em lote somente ao final do 
 
 Se esses arquivos ficarem corrompidos (por exemplo, erros de JSON), apague-os para que sejam recriados automaticamente.
 
+## Usando modelos locais com Ollama
+
+Caso tenha um modelo rodando via [Ollama](https://ollama.com) (por exemplo `llama3:8b`), defina a variável de ambiente `OLLAMA_MODEL` antes de executar o chat. Assim as respostas serão geradas pelo servidor local em vez da API da OpenAI.
+
+```bash
+export OLLAMA_MODEL="llama3:8b"
+python query.py
+```
+
+Você pode configurar o endpoint com `OLLAMA_URL` caso não seja `http://localhost:11434`.
+
