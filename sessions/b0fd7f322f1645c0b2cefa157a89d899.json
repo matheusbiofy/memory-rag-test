@@ -1,0 +1,18 @@
+[
+  {
+    "role": "user",
+    "content": "qual o numero do processo?"
+  },
+  {
+    "role": "assistant",
+    "content": "Conforme o documento “progesso-do-processo”, o número do processo é 500567754.2013.4.04.7005."
+  },
+  {
+    "role": "user",
+    "content": "quem é o exequente e o executado?"
+  },
+  {
+    "role": "assistant",
+    "content": "No processo nº 5005677-54.2013.4.04.7005 (Execução de Título Extrajudicial), conforme consta em 01/09/2014 – Expedido edital leilaopraca,  \n• Exequente: Caixa Econômica Federal (CEF)  \n• Executados: Antonio Arnaldo Debona – Espólio e De Bona Construções Civis Ltda."
+  }
+]

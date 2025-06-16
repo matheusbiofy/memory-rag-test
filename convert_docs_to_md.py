@@ -4,7 +4,7 @@ import sys
 
 files = os.listdir("docs_pdf")
 for file in files:
-    if os.path.exists(f"docs_2/{file.split('.')[0]}.md"):
+    if os.path.exists(f"docs/{file.split('.')[0]}.md"):
         print(f"Skipping {file}, already converted.")
         continue
         
@@ -21,11 +21,11 @@ for file in files:
             print(f"Error: No markdown content received for {file}")
             print(f"Response content: {response.json()}")
             continue
-            
-        with open(f"docs_2/{file.split('.')[0]}.md", "w", encoding="utf-8") as f:
+
+        with open(f"docs/{file.split('.')[0]}.md", "w", encoding="utf-8") as f:
             f.write(md_content)
-            print(f"Doc {len(os.listdir('docs_2'))} written: {file}")
-            
+            print(f"Doc {len(os.listdir('docs'))} written: {file}")
+
     except requests.exceptions.RequestException as e:
         print(f"Error processing {file}: {str(e)}", file=sys.stderr)
     except Exception as e:

@@ -1,0 +1,26 @@
+[
+  {
+    "role": "user",
+    "content": "qual o numero do processo?"
+  },
+  {
+    "role": "assistant",
+    "content": "Conforme o documento “progesso-do-processo”, o número do processo é 500567754.2013.4.04.7005."
+  },
+  {
+    "role": "user",
+    "content": "quais juizes estão presentes nesse processo?"
+  },
+  {
+    "role": "assistant",
+    "content": "Os magistrados identificados nos despachos e decisões neste processo são:\n\n1. GUILHERME ROMAN BORGES  \n   – Juiz Federal Substituto na Titularidade Plena  \n   (22/03/2023 – Despacho/Decisão, Ofício nº 700013757072ES)\n\n2. WESLEY SCHNEIDER COLLYER  \n   – Juiz Federal Substituto na Titularidade Plena  \n   (06/06/2016 – Despacho/Decisão Interlocutória, Código Verificador 700001956346.V15)\n\n3. MARIA DE FÁTIMA FREITAS LABARRÊRE  \n   – Relatora da Primeira Turma  \n   (06/06/2016 – Despacho/Decisão Interlocutória, DE 24/11/2009)\n\n4. LÍLIA CÔRTES DE CARVALHO DE MARTINO  \n   – Juíza Federal  \n   (24/10/2014 – Despacho/Decisão que indefere pedido, Código Verificador 8805012V5)"
+  },
+  {
+    "role": "user",
+    "content": "durante o processo houve algum leilão suspenso ou com data remarcada?"
+  },
+  {
+    "role": "assistant",
+    "content": "Sim. Houve suspensão e remarcação de leilões ao longo do feito:\n\n1) 31/03/2020 – Despacho determinou que, em razão da suspensão de prazos processuais pelo CNJ e pelo TRF4, a Secretaria “designe novas datas para a realização de leilão dos bens penhorados” (31/03/2020 ‑ Despacho).\n\n2) 04/03/2021 – Em seguida, foi autorizada “excepcionalmente a realização dos leilões já designados para os dias 16 de abril de 2021 (1º leilão) e 30 de abril de 2021 (2º leilão), sem necessidade de novas reavaliações” (04/03/2021 ‑ Despacho)."
+  }
+]

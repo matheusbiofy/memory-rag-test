@@ -1,0 +1,18 @@
+[
+  {
+    "role": "user",
+    "content": "qual o numero do processo?"
+  },
+  {
+    "role": "assistant",
+    "content": "Conforme consta no cabeçalho da petição de 02/10/2024 (2150973512 – peticao intercorrente.pdf), o número do processo é 0002911-67.1994.4.01.3900."
+  },
+  {
+    "role": "user",
+    "content": "liste o nome de todos os juízes que foram mencionados nesse processo"
+  },
+  {
+    "role": "assistant",
+    "content": "Nos trechos disponibilizados – notadamente nos documentos de 02/07/2021 (“Petição Inicial”, fl. – peticao inicialpdf.pdfftaj7f62) e de 01/07/2022 (substabelecimentos e petição intercorrente – substabelecimento adalberto pessoa rodrigues netopdf.pdf5o14uatu e peticao intercorrente habilitacao adalberto pessoa rodrigues netopdf.pdfg44q74y1) – não houve menção expressa a qualquer magistrado (juiz ou desembargador). Portanto, não há nome de juiz a ser listado."
+  }
+]

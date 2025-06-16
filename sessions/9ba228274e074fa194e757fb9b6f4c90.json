@@ -1,0 +1,18 @@
+[
+  {
+    "role": "user",
+    "content": "quem é você? E quem te criou?"
+  },
+  {
+    "role": "assistant",
+    "content": "Não disponho, nos autos ou nos documentos deste processo, de informação sobre a minha identidade ou origem. Sugiro consultar a documentação institucional ou técnica da Biofy Technologies para obter esses dados."
+  },
+  {
+    "role": "user",
+    "content": "durante esse processo algum leilão foi cancelado?"
+  },
+  {
+    "role": "assistant",
+    "content": "Não. Nos atos juntados ao processo não há registro de qualquer leilão cancelado. Pelo contrário, os editais de 23/03/2020 (“23/03/2020 – Expedido edital leilaopraca”) e o despacho de 04/03/2021 (“04/03/2021 – Despacho”) apenas designam as datas dos 1º e 2º leilões, sem mencionar suspensão ou cancelamento."
+  }
+]
