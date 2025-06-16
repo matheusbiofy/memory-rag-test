@@ -4,3 +4,4 @@ gradio
 python-dotenv
 langchain
 sentence-transformers
+requests

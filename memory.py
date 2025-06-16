@@ -5,16 +5,14 @@ from typing import List
 
 import faiss
 import numpy as np
-from openai import OpenAI
 
-from utils import get_embedding
+from utils import get_embedding, cached_completion
 
 
 class EphemeralMemory:
     """Simple ephemeral memory with summarization and persistence."""
 
     def __init__(self, session_id: str | None = None, max_history: int = 10):
-        self.client = OpenAI()
         self.max_history = max_history
         self.session_id = session_id or uuid.uuid4().hex
         os.makedirs("sessions", exist_ok=True)
@@ -54,12 +52,7 @@ class EphemeralMemory:
             "Resuma a seguinte conversa em português, mantendo as informações essenciais:\n"
             f"{convo}\nResumo:"
         )
-        chat = self.client.chat.completions.create(
-            model="gpt-4o",
-            messages=[{"role": "user", "content": prompt}],
-            temperature=0,
-        )
-        summary = chat.choices[0].message.content.strip()  # type: ignore
+        summary = cached_completion(prompt).strip()
         self.history = [{"role": "system", "content": summary}] + self.history[4:]
         emb = get_embedding(summary)
         faiss.normalize_L2(emb[None, :])
