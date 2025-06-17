@@ -10,7 +10,11 @@ from openai import OpenAI
 
 # Configuration for optional Ollama usage
 OLLAMA_MODEL = os.getenv("OLLAMA_MODEL")
-OLLAMA_URL = os.getenv("OLLAMA_URL", "http://localhost:11434/v1")
+# Base URL for an optional Ollama server. The official API endpoints live
+# directly under the server root, e.g. `http://localhost:11434/api/...`.
+# The previous default incorrectly included a `/v1` prefix which caused
+# requests to fail with a 404 error when using Ollama locally.
+OLLAMA_URL = os.getenv("OLLAMA_URL", "http://localhost:11434")
 
 try:
     from sentence_transformers import SentenceTransformer  # type: ignore
