@@ -10,7 +10,7 @@ from openai import OpenAI
 
 # Configuration for optional Ollama usage
 OLLAMA_MODEL = os.getenv("OLLAMA_MODEL")
-OLLAMA_URL = os.getenv("OLLAMA_URL", "http://localhost:11434")
+OLLAMA_URL = os.getenv("OLLAMA_URL", "http://localhost:11434/v1")
 
 try:
     from sentence_transformers import SentenceTransformer  # type: ignore
@@ -66,7 +66,7 @@ def get_embedding(text: str) -> np.ndarray:
     if _local_model:
         emb = _local_model.encode([text])[0].tolist()
     else:
-        resp = client.embeddings.create(model="text-embedding-ada-002", input=[text])
+        resp = client.embeddings.create(model="text-embedding-3-large", input=[text])
         emb = resp.data[0].embedding
     _EMBED_CACHE[text] = emb
     return np.array(emb, dtype="float32")
@@ -87,6 +87,7 @@ def cached_completion(prompt: str) -> str:
         "Cada resposta que você fornecer deve citar de forma amigável o nome do documento onde a informação aparece (ex.: '05/04/2022 - Deferido o pedido').\n\n"
         "### Exemplos de interação\n"
     )
+    #few-shot example 1
     system_message += (
         "Usuário: Quais são as partes envolvidas na execução de título "
         "extrajudicial e qual o valor da dívida?\n"
@@ -95,14 +96,14 @@ def cached_completion(prompt: str) -> str:
         "da execução evoluiu de R$ 781.700,38 em 2013 para cerca de "
         "R$ 94.915.840,44 em 2021.\n\n"
     )
-
+    #few-shot example 2
     system_message += (
         "Usuário: Quais bens foram objeto de penhora e leilão neste processo?\n"
         "Assistente: Foram penhorados diversos imóveis dos executados, incluindo "
         "garagens, salas comerciais e terrenos. Alguns foram leiloados, outros "
         "tiveram o leilão cancelado por falta de registro da penhora.\n\n"
     )
-
+    #few-shot example 3
     system_message += (
         "Usuário: Como funciona a preferência de créditos em caso de leilão "
         "judicial?\n"
@@ -110,7 +111,7 @@ def cached_completion(prompt: str) -> str:
         "os créditos tributários, que prevalecem sobre quaisquer outros, "
         "inclusive os garantidos por hipoteca.\n"
     )
-
+    #few-shot example 4
     system_message += (
         "Usuário: Teve leilão cancelado neste processo?\n"
         "Assistente: Sim, o leilão de 10/11/2021 foi cancelado por falta de "
@@ -119,6 +120,7 @@ def cached_completion(prompt: str) -> str:
         "Usuário: Qual é o valor da dívida atualizada?\n"
         "Assistente: O valor atualizado da dívida é de aproximadamente "
     )
+    
     if OLLAMA_MODEL:
         resp = requests.post(
             f"{OLLAMA_URL}/api/generate",
