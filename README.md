@@ -31,6 +31,38 @@ python ingest.py
 Os chunks serão armazenados em `chunks.json` e o índice em `faiss.index`.
 Os caches de embeddings agora são salvos apenas ao final da ingestão para reduzir escritas em disco.
 
+### Como o `id` preserva os chunks para o retrieval
+
+Durante a ingestão cada pedaço de texto recebe um identificador exclusivo
+`<arquivo>__<n>`. Isso é definido no `ingest.py`:
+
+```python
+for i, chunk in enumerate(chunks):
+    docs.append({
+        "id": f"{fname}__{i}",
+        "text": chunk,
+        "metadata": {"source": fname}
+    })
+```
+
+Esse `id` é gravado em `chunks.json` junto com o texto. Na consulta,
+`query.py` carrega o índice FAISS e cria um mapa `id → texto` para recuperar o
+conteúdo original:
+
+```python
+index = faiss.read_index("faiss.index")
+with open("chunks.json", encoding="utf-8") as f:
+    docs = json.load(f)
+chunk_map = { d["id"]: d["text"] for d in docs }
+id_list   = [ d["id"] for d in docs ]
+```
+
+Ao pesquisar, o FAISS retorna apenas as posições dos vetores mais próximos.
+Usamos `id_list` para obter o `id` correspondente e `chunk_map` para localizar o
+texto. Assim, o `id` funciona como uma “ponte de memória” entre o vetor
+indexado e o trecho original, possibilitando a exibição correta dos documentos
+encontrados.
+
 ## Executando
 
 ```bash
